@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let (:question) { create(:question) }
+  let(:question) { create(:question) }
   let(:user) { create(:user) }
 
   describe "GET #index" do
@@ -109,8 +109,8 @@ RSpec.describe QuestionsController, type: :controller do
       before { patch :update, id: question, question: { title: nil, body: nil } }
       it 'does not change question attributes' do
         question.reload
-        expect(question.title).to eq "My question"
-        expect(question.body).to eq "Question's Body"
+        expect(question.title).to_not eq nil
+        expect(question.body).to_not eq nil
       end
 
       it 'renders edit template' do
