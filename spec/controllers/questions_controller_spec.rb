@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let (:question) { FactoryGirl.create(:question) }
+  let (:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe "GET #index" do
     before { get :index }
 
     it 'loads all questions' do
-      questions = FactoryGirl.create_list(:question, 3)
+      questions = create_list(:question, 3)
       expect(assigns(:questions)).to eq questions
     end
 
@@ -29,7 +30,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #new" do
-    before { get :new }
+    before do
+      login(user)
+      get :new
+    end
 
     it 'assigns new Question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -41,7 +45,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #edit" do
-    before { get :edit, id: question }
+    before do
+      login(user)
+      get :edit, id: question
+    end
 
     it 'edits question' do
       expect(assigns(:question)).to eq question
@@ -53,15 +60,17 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "POST #create" do
+    before { login(user) }
+
     context 'valid' do
       it 'saves new question in DB' do
         expect {
-          post :create, question: FactoryGirl.attributes_for(:question)
+          post :create, question: attributes_for(:question)
         }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show' do
-        post :create, question: FactoryGirl.attributes_for(:question)
+        post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
@@ -69,18 +78,20 @@ RSpec.describe QuestionsController, type: :controller do
     context 'invalid' do
       it 'does not save new question in DB' do
         expect {
-          post :create, question: FactoryGirl.attributes_for(:invalid_question)
+          post :create, question: attributes_for(:invalid_question)
         }.to_not change(Question, :count)
       end
 
       it 'renders show template' do
-        post :create, question: FactoryGirl.attributes_for(:invalid_question)
+        post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
     end
   end
 
   describe "PATCH #update" do
+    before { login(user) }
+
     context 'valid' do
       before { patch :update, id: question, question: { title: 'New Title', body: 'New Body' } }
       it 'changes question' do
@@ -109,7 +120,11 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    before { question }
+    before do
+      login(user)
+      question
+    end
+
     it 'deletes question from DB' do
       expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
     end
