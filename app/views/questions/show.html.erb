@@ -1,2 +1,7 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
+<% @question.answers.each do |answer| %>
+  <p><%= answer.body %></p>
+<% end %>
+
+<%= link_to 'To answer', new_question_answer_path(@question) %>

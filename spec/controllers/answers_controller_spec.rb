@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let (:answer) { create(:answer) }
-  let (:question) { create(:question) }
+  let(:answer) { create(:answer) }
+  let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe "GET #new" do
-    before { get :new, question_id: question }
+    before do
+      login(user)
+      get :new, question_id: question
+    end
 
     it 'assigns new Answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -17,6 +21,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "POST #create" do
+    before { login(user) }
+
     context 'valid' do
       it 'saves new answer links with question in DB' do
         expect {
@@ -26,7 +32,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to show' do
         post :create, question_id: question, answer: attributes_for(:answer)
-        expect(response).to redirect_to answer_path(assigns(:answer))
+        expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 

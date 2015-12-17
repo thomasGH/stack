@@ -10,9 +10,7 @@ feature 'List of questions', %q{
 
   scenario 'User reads index page' do
     visit questions_path
-    expect(page).to have_content 'My question 1'
-    expect(page).to have_content 'My question 2'
-    expect(page).to have_content 'My question 3'
+    expect(page).to have_content 'My question'
     expect(current_path).to eq questions_path
   end
 end
