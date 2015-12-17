@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'List of questions', %q{
   In order to read content
   As any user
-  I want to show list of questions
+  I want to see list of questions
 } do
 
   given!(:question) { create_list(:question, 3) }

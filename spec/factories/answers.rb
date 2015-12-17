@@ -1,6 +1,11 @@
 FactoryGirl.define do
+  sequence :body do |n|
+    "Answer body #{n}"
+  end
+
   factory :answer do
-    body "Answer's Body"
+    body
+    question
   end
 
   factory :invalid_answer, class: 'Answer' do
