@@ -10,6 +10,10 @@ feature 'List of questions', %q{
 
   scenario 'User reads index page' do
     visit questions_path
-    expect(page).to have_content 'My question'
+
+    question.each do |q|
+      expect(page).to have_content q.title
+      expect(page).to have_content q.body
+    end
   end
 end

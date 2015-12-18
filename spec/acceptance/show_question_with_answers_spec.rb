@@ -6,13 +6,17 @@ feature 'Show qestion and answers', %q{
   I want to see question page
 } do
 
-  given!(:answer) { create(:answer) }
+  given!(:question) { create(:question) }
+  given!(:answers) { create_list(:question_with_answers, 3, question: question) }
   
   scenario 'User reads page of the question' do
-    visit question_path(answer.question)
+    visit question_path(question)
 
-    expect(page).to have_content 'My question'
-    expect(page).to have_content "Question's Body"
-    expect(page).to have_content "Answer body"
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+
+    answers.each do |answer|
+      expect(page).to have_content answer.body
+    end
   end
 end

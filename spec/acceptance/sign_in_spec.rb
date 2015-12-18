@@ -13,8 +13,6 @@ feature 'Signing in', %q{
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
 
-#    save_and_open_page
-
     click_on 'Log in'
 
     expect(page).to have_content 'Signed in successfully'
