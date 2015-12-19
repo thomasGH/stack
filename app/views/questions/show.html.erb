@@ -4,4 +4,8 @@
   <p><%= answer.body %></p>
 <% end %>
 
+<% if current_user && current_user.author_of?(@question) %>
+  <%= link_to 'Delete', @question, method: :delete %>
+<% end %>
+
 <%= link_to 'To answer', new_question_answer_path(@question) %>
