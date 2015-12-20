@@ -91,6 +91,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "PATCH #update" do
     before { login(user) }
+    let!(:question) { create(:question, user: user) }
 
     context 'valid' do
       before { patch :update, id: question, question: { title: 'New Title', body: 'New Body' } }
@@ -115,6 +116,14 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'renders edit template' do
         expect(response).to render_template :edit
+      end
+    end
+
+    context "non-author can't edit question" do
+      it 'does not edit question in DB' do
+        patch :update, id: question, question: { title: 'New Title', body: 'New Body' }
+        expect(question.title).to_not eq 'New Title'
+        expect(question.body).to_not eq 'New Body'
       end
     end
   end

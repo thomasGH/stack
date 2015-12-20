@@ -2,14 +2,16 @@
 <p><%= @question.body %></p>
 
 <% if current_user && current_user.author_of?(@question) %>
-  <%= link_to 'Delete question', @question, method: :delete %>
+  <p><%= link_to 'Edit question', edit_question_path(@question) %></p>
+  <p><%= link_to 'Delete question', @question, method: :delete %></p>
 <% end %>
 
 <% @question.answers.each do |answer| %>
   <p><%= answer.body %></p>
 
   <% if current_user && current_user.author_of?(answer) %>
-    <%= link_to 'Delete answer', answer, method: :delete %>
+    <p><%= link_to 'Edit answer', edit_answer_path(answer) %></p>
+    <p><%= link_to 'Delete answer', answer, method: :delete %></p>
   <% end %>
 <% end %>
 
