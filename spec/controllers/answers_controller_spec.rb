@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:answer) { create(:answer) }
+  let(:answer) { create(:answer, question: question) }
   let(:question) { create(:question) }
   let(:user) { create(:user) }
 
@@ -46,6 +46,33 @@ RSpec.describe AnswersController, type: :controller do
       it 'renders show template' do
         post :create, question_id: question, answer: attributes_for(:invalid_question)
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    before do
+      login(user)
+    end
+
+    context "author delete his own answer" do
+      let!(:answer) { create(:answer, question: question, user: user) }
+
+      it 'deletes answer from DB' do
+        expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, id: answer
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context "non-author can't delete answer" do
+      before { answer }
+
+      it 'does not delete answer from DB' do
+        expect { delete :destroy, id: answer }.to_not change(Answer, :count)
       end
     end
   end

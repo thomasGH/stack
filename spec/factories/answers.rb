@@ -5,6 +5,7 @@ FactoryGirl.define do
 
   factory :answer do
     body
+    user
   end
 
   factory :invalid_answer, class: 'Answer' do
@@ -14,5 +15,6 @@ FactoryGirl.define do
   factory :question_with_answers, class: 'Answer' do
     body
     question
+    user
   end
 end

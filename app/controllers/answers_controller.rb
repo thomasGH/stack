@@ -8,11 +8,19 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created'
     else
       render :new
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer.destroy if current_user.author_of?(@answer)
+    redirect_to questions_path
   end
 
   private

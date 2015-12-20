@@ -122,7 +122,6 @@ RSpec.describe QuestionsController, type: :controller do
   describe "DELETE #destroy" do
     before do
       login(user)
-      question
     end
 
     context "author delete his own question" do

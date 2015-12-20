@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   has_many :questions
-  
+  has_many :answers
+
   def author_of?(object)
     id == object.user_id
   end

@@ -13,7 +13,7 @@ feature 'Deleting the question', %q{
   scenario 'Author can delete question' do
     login(user)
     visit question_path(question)
-    click_on 'Delete'
+    click_on 'Delete question'
 
     expect(current_path).to eq questions_path
     expect(page).to_not have_content question.title
@@ -23,12 +23,12 @@ feature 'Deleting the question', %q{
     login(another_user)
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete'
+    expect(page).to_not have_link 'Delete question'
   end
 
   scenario "Unauthenticated user can't delete question" do
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete'
+    expect(page).to_not have_link 'Delete question'
   end
 end
