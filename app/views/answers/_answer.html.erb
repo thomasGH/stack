@@ -1,12 +1,13 @@
 <%= div_for answer do %>
   <p><%= answer.body %></p>
-
-  <% if current_user && current_user.author_of?(answer) %>
-    <%= form_for (answer), html: { style: "display: none" } do |f| %>
-      <%= f.text_area :body %>
-      <%= f.submit 'Update' %>
-    <% end %>
-    <%= link_to 'Edit answer', '#', class: 'edit_answer_link', data: { answer_id: answer.id } %>
-    <%= link_to 'Delete answer', answer, method: :delete, remote: true %>
-  <% end %>
 <% end %>
+
+<% if current_user && current_user.author_of?(answer) %>
+  <%= form_for (answer), html: { style: "display: none" } do |f| %>
+    <%= f.text_area :body %>
+    <%= f.submit 'Update' %>
+  <% end %>
+  <p><%= link_to 'Edit answer', '#', class: 'edit_answer_link', data: { answer_id: answer.id } %></p>
+  <p><%= link_to 'Delete answer', answer, method: :delete, remote: true %></p>
+<% end %>
+

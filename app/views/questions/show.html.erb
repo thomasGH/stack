@@ -11,11 +11,12 @@
 </div>
 
 <% if current_user %>
+  <div class="answer-errors"></div>
   <h2>New answer</h2>
 
   <%= form_for [@question, Answer.new], remote: true do |f| %>
     <%= f.label :body, 'Your answer' %>
-    <%= f.text_area :body %>
+    <%= f.text_area :body, id: 'new_answer_body' %>
     <%= f.submit 'Create' %>
   <% end %>
 <% end %>
