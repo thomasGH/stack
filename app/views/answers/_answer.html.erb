@@ -2,7 +2,11 @@
   <p><%= answer.body %></p>
 
   <% if current_user && current_user.author_of?(answer) %>
-    <p><%= link_to 'Edit answer', edit_answer_path(answer) %></p>
-    <p><%= link_to 'Delete answer', answer, method: :delete, remote: true %></p>
+    <%= form_for (answer), html: { style: "display: none" } do |f| %>
+      <%= f.text_area :body %>
+      <%= f.submit 'Update' %>
+    <% end %>
+    <%= link_to 'Edit answer', '#', class: 'edit_answer_link', data: { answer_id: answer.id } %>
+    <%= link_to 'Delete answer', answer, method: :delete, remote: true %>
   <% end %>
 <% end %>
