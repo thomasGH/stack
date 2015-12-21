@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  before_action :set_question, only: [:create, :update, :new] # 'new' will be remove after move answer's form to show question page
+  before_action :set_question, only: [:create, :new] # 'new' will be remove after move answer's form to show question page
 
   def new
     @answer = Answer.new
@@ -24,18 +24,18 @@ class AnswersController < ApplicationController
   def update
     if current_user.author_of?(@answer)
       if @answer.update(answer_params)
-        redirect_to @question, notice: 'Your answer successfully updated'
+        redirect_to @answer.question, notice: 'Your answer successfully updated'
       else
         render :edit
       end
     else
-      redirect_to @question
+      redirect_to @answer.question
     end
   end
 
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
-    redirect_to questions_path
+    redirect_to @answer.question
   end
 
   private

@@ -11,16 +11,12 @@ feature 'Updating the answer', %q{
   given(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-
   scenario 'Author can edit answer' do
     login(user)
     visit question_path(question)
     click_on 'Edit answer'
     fill_in 'Body', with: 'text text'
-        save_and_open_page
-
     click_on 'Update'
-    save_and_open_page
 
     expect(page).to have_content 'Your answer successfully updated'
     expect(page).to have_content 'text text'

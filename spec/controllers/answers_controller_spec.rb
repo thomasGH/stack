@@ -50,6 +50,57 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe "GET #edit" do
+    before do
+      login(user)
+      get :edit, id: answer
+    end
+
+    it 'edits answer' do
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'renders edit template' do
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe "PATCH #update" do
+    before { login(user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    context 'valid' do
+      before { patch :update, id: answer, answer: { body: 'New Body' } }
+      it 'changes answer' do
+        answer.reload
+        expect(answer.body).to eq 'New Body'
+      end
+
+      it 'redirects to show' do
+        expect(response).to redirect_to question
+      end
+    end
+
+    context 'invalid' do
+      before { patch :update, id: answer, answer: { body: nil } }
+      it 'does not change question attributes' do
+        answer.reload
+        expect(answer.body).to_not eq nil
+      end
+
+      it 'renders edit template' do
+        expect(response).to render_template :edit
+      end
+    end
+
+    context "non-author can't edit answer" do
+      it 'does not edit answer in DB' do
+        patch :update, id: answer, answer: { body: 'New Body' }
+        expect(answer.body).to_not eq 'New Body'
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     before do
       login(user)
@@ -62,9 +113,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to index' do
+      it 'redirects to question' do
         delete :destroy, id: answer
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to question
       end
     end
 
