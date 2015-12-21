@@ -6,13 +6,16 @@
   <p><%= link_to 'Delete question', @question, method: :delete %></p>
 <% end %>
 
-<% @question.answers.each do |answer| %>
-  <p><%= answer.body %></p>
+<div class="answers">
+  <%= render @question.answers %>
+</div>
 
-  <% if current_user && current_user.author_of?(answer) %>
-    <p><%= link_to 'Edit answer', edit_answer_path(answer) %></p>
-    <p><%= link_to 'Delete answer', answer, method: :delete %></p>
+<% if current_user %>
+  <h2>New answer</h2>
+
+  <%= form_for [@question, Answer.new], remote: true do |f| %>
+    <%= f.label :body, 'Your answer' %>
+    <%= f.text_area :body %>
+    <%= f.submit 'Create' %>
   <% end %>
 <% end %>
-
-<p><%= link_to 'To answer', new_question_answer_path(@question) %></p>

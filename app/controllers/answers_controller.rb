@@ -1,20 +1,16 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  before_action :set_question, only: [:create, :new] # 'new' will be remove after move answer's form to show question page
-
-  def new
-    @answer = Answer.new
-  end
+  before_action :set_question, only: [:create]
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created'
+    #  redirect_to @question, notice: 'Your answer successfully created'
     else
-      render :new
+      render :create
     end
   end
 
@@ -35,7 +31,6 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
-    redirect_to @answer.question
   end
 
   private

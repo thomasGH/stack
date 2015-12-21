@@ -11,7 +11,7 @@ feature 'Deleting the answer', %q{
   given(:question) { create(:question, user: user) }
   given!(:answers) { create_list(:question_with_answers, 1, question: question, user: user) }
 
-  scenario 'Author can delete answer' do
+  scenario 'Author can delete answer', js: true do
     login(user)
     visit question_path(question)
     click_on 'Delete answer'
