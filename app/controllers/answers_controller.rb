@@ -8,9 +8,9 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-    #  redirect_to @question, notice: 'Your answer successfully created'
+      render json: @answer
     else
-      render :create
+      render json: @answer.errors.full_messages, status: :unprocessable_entity 
     end
   end
 
@@ -20,9 +20,9 @@ class AnswersController < ApplicationController
   def update
     if current_user.author_of?(@answer)
       if @answer.update(answer_params)
-        redirect_to @answer.question, notice: 'Your answer successfully updated'
+        render json: @answer
       else
-        render :edit
+        render json: @answer.errors.full_messages, status: :unprocessable_entity
       end
     else
       redirect_to @answer.question
@@ -31,6 +31,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
+    render json: @answer
   end
 
   private
