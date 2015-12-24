@@ -1,4 +1,4 @@
-.question
+.question data={ question_id: @question.id }
   h1.question_title= @question.title
   p.question_body= @question.body
   - if current_user && current_user.author_of?(@question)
@@ -16,3 +16,5 @@
     = f.label :body, 'Your answer'
     = f.text_area :body, id: 'new_answer_body'
     = f.submit 'Create'
+
+= subscribe_to "/questions/#{@question.id}/answers"

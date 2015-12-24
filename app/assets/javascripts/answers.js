@@ -62,4 +62,13 @@ $(document).ready(function() {
     form.toggle();
     title.toggle();
   })
+
+  questionId = $('.question').data('questionId');
+  channel = '/questions/' + questionId + '/answers';
+  PrivatePub.subscribe(channel, function(data, channel) {
+    response = data['response'];
+    answer = response.answer;
+    console.log(answer);
+    $('.answers').append(answerBlock(answer.id, answer.body));
+  })
 })
