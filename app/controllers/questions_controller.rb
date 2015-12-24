@@ -30,9 +30,9 @@ class QuestionsController < ApplicationController
   def update
     if current_user.author_of?(@question)
       if @question.update(question_params)
-        redirect_to @question, notice: 'Your question successfully updated'
+        render json: @question
       else
-        render :edit
+        render json: @question.errors.full_messages, status: :unprocessable_entity
       end
     else
       redirect_to @question
@@ -41,7 +41,6 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy if current_user.author_of?(@question)
-    redirect_to questions_path
   end
 
   private

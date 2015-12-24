@@ -7,7 +7,7 @@ $(document).ready(function() {
       + id + '" action="/answers/'
       + id + '" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><textarea name="answer[body]" id="answer_body"></textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_answer_link" data-answer-id="'
       + id + '" href="#">Edit answer</a></p><p><a class: "delete_answer_link" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/answers/'
-      + id + '">Delete answer</a></p></div>'
+      + id + '">Delete answer</a></p></div>';
   }
 
   $('form.new_answer').bind('ajax:success', function(e, answer, status, xhr) {
