@@ -1,0 +1,18 @@
+.question
+  h1.question_title= @question.title
+  p.question_body= @question.body
+  - if current_user && current_user.author_of?(@question)
+    = form_for @question, remote: true, html: { style: "display: none" } do |f|
+      = f.text_field :title
+      = f.text_area :body
+      = f.submit 'Update'
+    p= link_to 'Edit question', '#', class: 'edit_question_link'
+.qustion-errors
+.answers= render @question.answers
+- if current_user
+  .answer-errors
+  h2 New answer
+  = form_for [@question, Answer.new], remote: true, format: :json do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body, id: 'new_answer_body'
+    = f.submit 'Create'
