@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+  $(document).bind('ajax:error', function(e, xhr, status, error) {
+    if (status == 403) {
+      alert('У вас нет прав');
+    }
+  })
+
   var answerBlock = function(id, body) {
     return '<div class="answer" id="answer_'
       + id + '"><p class="answer_body">'

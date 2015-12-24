@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
         render json: @answer.errors.full_messages, status: :unprocessable_entity
       end
     else
-      render json: @answer.errors.full_messages, status: :forbiden
+      head :forbiden
     end
   end
 
