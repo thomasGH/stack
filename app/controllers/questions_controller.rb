@@ -35,7 +35,7 @@ class QuestionsController < ApplicationController
         render json: @question.errors.full_messages, status: :unprocessable_entity
       end
     else
-      redirect_to @question
+      render json: @question.errors.full_messages, status: :forbidden
     end
   end
 

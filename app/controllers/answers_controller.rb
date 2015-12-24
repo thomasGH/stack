@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
         render json: @answer.errors.full_messages, status: :unprocessable_entity
       end
     else
-      redirect_to @answer.question
+      render json: @answer.errors.full_messages, status: :forbiden
     end
   end
 
