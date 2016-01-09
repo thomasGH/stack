@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Create answer', %q{
   In order to give the answer a question
   As an authenticated user
-  I want to able to write question
+  I want to able to write answer
 } do
 
   given!(:user) { create(:user) }
@@ -13,7 +13,7 @@ feature 'Create answer', %q{
     login(user)
 
     visit question_path(question)
-    fill_in 'Your answer', with: 'Test answer'
+    fill_in 'new_answer_body', with: 'Test answer'
     click_on 'Create'
 
     within '.answers' do
@@ -24,6 +24,6 @@ feature 'Create answer', %q{
   scenario 'Non-athenticated user tries to create answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link 'Your answer'
+    expect(page).to_not have_link 'new_answer_body'
   end
 end

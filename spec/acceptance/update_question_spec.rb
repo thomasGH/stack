@@ -10,15 +10,14 @@ feature 'Updating the question', %q{
   given!(:another_user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
-  scenario 'Author can edit question' do
+  scenario 'Author can edit question', js: true do
     login(user)
     visit question_path(question)
     click_on 'Edit question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Text', with: 'text text'
+    fill_in 'question_title', with: 'Test question'
+    fill_in 'question_body', with: 'text text'
     click_on 'Update'
 
-    expect(page).to have_content 'Your question successfully updated'
     expect(page).to have_content 'Test question'
     expect(page).to have_content 'text text'
   end

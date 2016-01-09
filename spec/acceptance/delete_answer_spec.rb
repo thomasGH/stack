@@ -15,6 +15,7 @@ feature 'Deleting the answer', %q{
     login(user)
     visit question_path(question)
     click_on 'Delete answer'
+    page.driver.browser.switch_to.alert.accept
 
     expect(current_path).to eq question_path(question)
     expect(page).to_not have_content answers.first.body

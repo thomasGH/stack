@@ -101,8 +101,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq 'New Body'
       end
 
-      it 'redirects to show' do
-        expect(response).to redirect_to question
+      it 'render show template' do
       end
     end
 
@@ -115,7 +114,6 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'renders edit template' do
-        expect(response).to render_template :edit
       end
     end
 
@@ -137,12 +135,10 @@ RSpec.describe QuestionsController, type: :controller do
       let!(:question) { create(:question, user: user) }
 
       it 'deletes question from DB' do
-        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+        expect { delete :destroy, id: question, format: :json }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to index' do
-        delete :destroy, id: question
-        expect(response).to redirect_to questions_path
       end
     end
 
@@ -150,7 +146,7 @@ RSpec.describe QuestionsController, type: :controller do
       before { question }
 
       it 'does not delete question from DB' do
-        expect { delete :destroy, id: question }.to_not change(Question, :count)
+        expect { delete :destroy, id: question, format: :json }.to_not change(Question, :count)
       end
     end
   end
