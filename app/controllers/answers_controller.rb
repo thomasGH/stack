@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: response
+      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: @answer
       render json: @answer
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity 

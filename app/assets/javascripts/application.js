@@ -12,5 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= reguire private_pub
+//= require private_pub
 //= require_tree .

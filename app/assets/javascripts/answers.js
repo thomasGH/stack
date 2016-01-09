@@ -8,10 +8,11 @@ $(document).ready(function() {
 
   var answerBlock = function(id, body) {
     return '<div class="answer" id="answer_'
-      + id + '"><p class="answer_body">'
+      + id + '"><p class="answer_body" style="display: block">'
       + body + '</p><form style="display: none" class="edit_answer" id="edit_answer_'
       + id + '" action="/answers/'
-      + id + '" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><textarea name="answer[body]" id="answer_body"></textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_answer_link" data-answer-id="'
+      + id + '" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><textarea name="answer[body]" id="answer_body">'
+      + body + '</textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_answer_link" data-answer-id="'
       + id + '" href="#">Edit answer</a></p><p><a class: "delete_answer_link" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/answers/'
       + id + '">Delete answer</a></p></div>';
   }
@@ -66,9 +67,9 @@ $(document).ready(function() {
   questionId = $('.question').data('questionId');
   channel = '/questions/' + questionId + '/answers';
   PrivatePub.subscribe(channel, function(data, channel) {
-    response = data['response'];
-    answer = response.answer;
-    console.log(answer);
-    $('.answers').append(answerBlock(answer.id, answer.body));
+    answer = data['response'];
+    if (answer.user_id != $('body').data('userId')) {
+      $('.answers').append(answerBlock(answer.id, answer.body));
+    }
   })
 })
