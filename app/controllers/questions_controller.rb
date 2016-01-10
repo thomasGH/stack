@@ -21,7 +21,8 @@ class QuestionsController < ApplicationController
     @question.user = current_user
 
     if @question.save
-      redirect_to @question, notice: 'Your question successfully created'
+      PrivatePub.publish_to "/questions", response: @question
+      redirect_to questions_path
     else
       render :new
     end

@@ -38,4 +38,12 @@ $(document).ready(function() {
     title.toggle();
     body.toggle();
   })
+
+  PrivatePub.subscribe('/questions', function(data, channel) {
+    question = data['response'];
+    $('.questions').append('<h2><a href="/questions/'
+      + question.id + '">'
+      + question.title + '</a></h2><p>'
+      + question.body + '</p>');
+  })
 })
