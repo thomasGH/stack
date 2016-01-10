@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
 
     if @question.save
       PrivatePub.publish_to "/questions", response: @question
-      redirect_to questions_path
+      redirect_to questions_path, notice: 'Your question successfully created'
     else
       render :new
     end
