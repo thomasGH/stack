@@ -15,3 +15,5 @@ config/private_pub.yml
 /log/*
 !/log/.keep
 /tmp
+
+public/uploads/
