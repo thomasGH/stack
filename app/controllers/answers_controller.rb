@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_action :set_answer, only: [:show, :edit, :update, :destroy, :make_best]
   before_action :set_question, only: [:create]
 
   def create
@@ -33,6 +33,22 @@ class AnswersController < ApplicationController
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
     render json: @answer
+  end
+
+  def make_best
+    question = @answer.question
+
+    if current_user.author_of?(question)
+      question.best_answer_id = @answer.id
+
+      if question.save
+        render json: @answer
+      else
+        render json: @answer.errors.full_messages, status: :unprocessable_entity
+      end
+    else
+      head :forbidden
+    end
   end
 
   private

@@ -1,4 +1,4 @@
-.question data={ question_id: @question.id }
+.question data={ question_id: @question.id, best_answer_id: @question.best_answer_id }
   h1.question_title= @question.title
   p.question_body= @question.body
   - if current_user && current_user.author_of?(@question)
@@ -9,6 +9,7 @@
     p= link_to 'Edit question', '#', class: 'edit_question_link'
     p= link_to 'Delete question', @question, class: 'delete_question_link', method: :delete, data: { confirm: "Are you sure?" }
 .qustion-errors
+h2= 'Answers'
 .answers= render @question.answers
 - if current_user
   .answer-errors

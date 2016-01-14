@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :answers, shallow: true
   end
 
+  get 'answers/:id/best', to: 'answers#make_best', as: 'make_best'
+
   root to: 'questions#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

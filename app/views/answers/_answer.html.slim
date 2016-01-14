@@ -6,3 +6,6 @@
       = f.submit 'Update'
     p= link_to 'Edit answer', '#', class: 'edit_answer_link', data: { answer_id: answer.id }
     p= link_to 'Delete answer', answer, class: 'delete_answer_link', method: :delete, remote: true, data: { confirm: "Are you sure?" }
+  - if current_user && current_user.author_of?(answer.question)
+    p= link_to 'Best answer', make_best_path(answer), class: 'best_answer_link', remote: true
+  hr

@@ -64,6 +64,14 @@ $(document).ready(function() {
     title.toggle();
   })
 
+  var bestId = $('.question').data('bestAnswerId');
+  
+  $('#answer_' + bestId).prependTo($('.answers'));
+
+  $('a.best_answer_link').bind('ajax:success', function(e, answer, status, xhr) {
+    $('#answer_' + answer.id).prependTo($('.answers'));
+  })
+
   questionId = $('.question').data('questionId');
   channel = '/questions/' + questionId + '/answers';
   PrivatePub.subscribe(channel, function(data, channel) {
