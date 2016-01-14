@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   end
 
   get 'answers/:id/best', to: 'answers#make_best', as: 'make_best'
+  get 'answers/:id/up', to: 'answers#add_vote', as: 'add_vote'
+  get 'answers/:id/down', to: 'answers#subtract_vote', as: 'subtract_vote'
 
   root to: 'questions#index'
 
