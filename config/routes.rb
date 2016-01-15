@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'answers/:id/up', to: 'answers#add_vote', as: 'add_vote'
   get 'answers/:id/down', to: 'answers#subtract_vote', as: 'subtract_vote'
 
+  delete 'attachments/:id', to: 'attachments#destroy', as: 'attachment'
+
   root to: 'questions#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
