@@ -10,9 +10,11 @@ feature 'Add files to question' do
 
   scenario 'User adds file when asks question' do
     fill_in 'Title', with: 'Test question'
-    fill_in 'Title', with: 'text text'
+    fill_in 'Text', with: 'text text'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
+    visit questions_path
+    click_on 'Test question'
 
     expect(page).to have_link 'spec_helper.rb'
   end

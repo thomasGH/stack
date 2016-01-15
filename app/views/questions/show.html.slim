@@ -8,6 +8,10 @@
       = f.submit 'Update'
     p= link_to 'Edit question', '#', class: 'edit_question_link'
     p= link_to 'Delete question', @question, class: 'delete_question_link', method: :delete, data: { confirm: "Are you sure?" }
+    p Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.file.filename, a.file.url
 .qustion-errors
 h2= 'Answers'
 .answers= render @question.answers
