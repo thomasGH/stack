@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Add files to question' do
+feature 'Add files to answer' do
   given(:user) { create(:user) }
 
   background do

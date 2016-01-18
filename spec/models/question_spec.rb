@@ -13,5 +13,5 @@ RSpec.describe Question, type: :model do
   it { should validate_uniqueness_of (:title) }
   it { should validate_length_of(:title).is_at_most(200) }
 
-  it { should accept_nested_attributes_for(:attachments) }
+  it { should accept_nested_attributes_for :attachments }
 end

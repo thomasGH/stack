@@ -12,7 +12,7 @@
     ul
       - @question.attachments.each do |a|
         li
-          = link_to a.file.file.filename, a.file.url
+          = link_to a.file_name, a.file.url
           = link_to ' (Delete attachment)', a, method: :delete, data: { confirm: "Are you sure?" }
 .qustion-errors
 h2= 'Answers'
@@ -20,9 +20,14 @@ h2= 'Answers'
 - if current_user
   .answer-errors
   h2 New answer
-  = form_for [@question, Answer.new], remote: true, format: :json do |f|
+  = form_for [@question, @answer], remote: true, format: :json do |f|
     = f.label :body, 'Your answer'
     = f.text_area :body, id: 'new_answer_body'
+    p Attachments:
+    p
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
     = f.submit 'Create'
 
 = subscribe_to "/questions/#{@question.id}/answers"
