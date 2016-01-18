@@ -11,8 +11,9 @@
     p Attachments:
     ul
       - @question.attachments.each do |a|
-        li= link_to a.file.file.filename, a.file.url
-        li= link_to 'Delete attachment', a, method: :delete, data: { confirm: "Are you sure?" }
+        li
+          = link_to a.file.file.filename, a.file.url
+          = link_to ' (Delete attachment)', a, method: :delete, data: { confirm: "Are you sure?" }
 .qustion-errors
 h2= 'Answers'
 .answers= render @question.answers
