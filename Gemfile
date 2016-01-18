@@ -28,6 +28,9 @@ gem 'private_pub'
 gem 'thin'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
