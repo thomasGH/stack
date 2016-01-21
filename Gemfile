@@ -31,6 +31,7 @@ gem 'remotipart'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
+gem 'cancancan'
 
 
 # Use ActiveModel has_secure_password
