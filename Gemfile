@@ -30,6 +30,7 @@ gem 'carrierwave'
 gem 'remotipart'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-github'
 
 
 # Use ActiveModel has_secure_password
