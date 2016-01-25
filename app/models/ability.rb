@@ -27,5 +27,9 @@ class Ability
     
     #can :create, [Question, Answer]
     #can :destroy, [Question, Answer], user_id: user.id
+
+    can :make_best, Answer do |answer|
+      answer.question.user_id != user.id
+    end
   end
 end

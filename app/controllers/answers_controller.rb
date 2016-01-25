@@ -3,8 +3,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy, :make_best]
   before_action :set_question, only: [:create]
 
-  authorize_resource except: :make_best
-  authorize_resource :question, only: :make_best
+  authorize_resource
 
   def create
     @answer = @question.answers.new(answer_params)
