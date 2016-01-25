@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
         @message = exception.message
         render 'common/not_authorized'
       end
+    end
   end
 
   check_authorization unless :devise_controller?

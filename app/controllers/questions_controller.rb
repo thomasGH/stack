@@ -34,19 +34,15 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@question)
-      if @question.update(question_params)
-        render json: @question
-      else
-        render json: @question.errors.full_messages, status: :unprocessable_entity
-      end
+    if @question.update(question_params)
+      render json: @question
     else
-      head :forbidden
+      render json: @question.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(@question)
+    @question.destroy
     redirect_to questions_path
   end
 

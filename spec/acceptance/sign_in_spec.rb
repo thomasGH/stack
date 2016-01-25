@@ -16,7 +16,7 @@ feature 'Signing in', %q{
     click_on 'Log in'
 
     expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_link 'Log out'
+    expect(page).to have_link 'Sign out'
   end
 
   scenario 'Non-existing user tries to sign in' do
@@ -27,6 +27,6 @@ feature 'Signing in', %q{
     click_on 'Log in'
 
     expect(page).to have_content 'Invalid email or password'
-    expect(page).to_not have_link 'Log out'
+    expect(page).to_not have_link 'Sign out'
   end
 end

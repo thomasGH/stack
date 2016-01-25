@@ -1,7 +1,8 @@
 .question data={ question_id: @question.id, best_answer_id: @question.best_answer_id }
   h1.question_title= @question.title
+  .author= @question.user.email
   p.question_body= @question.body
-  - if current_user && current_user.author_of?(@question)
+  - if can?(:manage, @question)
     = form_for @question, remote: true, html: { style: "display: none" } do |f|
       = f.text_field :title
       = f.text_area :body
@@ -17,7 +18,7 @@
 .qustion-errors
 h2= 'Answers'
 .answers= render @question.answers
-- if current_user
+- if can?(:create, Answer)
   .answer-errors
   h2 New answer
   = form_for [@question, @answer], remote: true, format: :json do |f|

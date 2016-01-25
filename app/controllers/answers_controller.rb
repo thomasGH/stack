@@ -3,6 +3,9 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy, :make_best]
   before_action :set_question, only: [:create]
 
+  authorize_resource except: :make_best
+  authorize_resource :question, only: :make_best
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
@@ -19,35 +22,26 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      if @answer.update(answer_params)
-        render json: @answer
-      else
-        render json: @answer.errors.full_messages, status: :unprocessable_entity
-      end
+    if @answer.update(answer_params)
+      render json: @answer
     else
-      head :forbiden
+      render json: @answer.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    @answer.destroy
     render json: @answer
   end
 
   def make_best
     question = @answer.question
+    question.best_answer_id = @answer.id
 
-    if current_user.author_of?(question)
-      question.best_answer_id = @answer.id
-
-      if question.save
-        render json: @answer
-      else
-        render json: @answer.errors.full_messages, status: :unprocessable_entity
-      end
+    if question.save
+      render json: @answer
     else
-      head :forbidden
+      render json: @answer.errors.full_messages, status: :unprocessable_entity
     end
   end
 
