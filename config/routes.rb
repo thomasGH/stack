@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   
   resources :questions do
@@ -10,6 +11,15 @@ Rails.application.routes.draw do
   get 'answers/:id/down', to: 'answers#subtract_vote', as: 'subtract_vote'
 
   delete 'attachments/:id', to: 'attachments#destroy', as: 'attachment'
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles do
+        get :me, on: :collection
+      end
+      resources :questions
+    end
+  end
 
   root to: 'questions#index'
 

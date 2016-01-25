@@ -32,6 +32,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'cancancan'
+gem 'doorkeeper'
+gem 'active_model_serializers'
 
 
 # Use ActiveModel has_secure_password
@@ -64,4 +66,5 @@ group :test do
   gem 'shoulda-matchers', '~> 3.0'
   gem 'factory_girl_rails'
   gem 'launchy'
+  gem 'json_spec'
 end
