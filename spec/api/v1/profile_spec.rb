@@ -16,7 +16,7 @@ RSpec.describe "Profiles API" do
 
     context 'authorized' do
       let(:me) { create(:user) }
-      let(:access_token) { create(:access_token, resource_owner_id: me.id)}
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before { get '/api/v1/profiles/me', format: :json, access_token: access_token.token }
 
@@ -34,6 +34,31 @@ RSpec.describe "Profiles API" do
         it "does not contain #{attr}" do
           expect(response.body).to_not have_json_path(attr)
         end
+      end
+    end
+  end
+
+  describe "GET #index" do
+    context "unauthorized" do
+      it 'returns 401' do
+        get '/api/v1/profiles', format: :json
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let!(:user_me) { create(:user) }
+      let!(:user_other) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id: user_me.id) }
+
+      it 'returns 200 status' do
+        get '/api/v1/profiles', format: :json, access_token: access_token.token
+        expect(response).to be_success
+      end
+
+      it 'contains emails another users' do
+        get '/api/v1/profiles', format: :json, access_token: access_token.token
+        expect(response.body).to be_json_eql([user_other.email].to_json).at_path("profiles")
       end
     end
   end
