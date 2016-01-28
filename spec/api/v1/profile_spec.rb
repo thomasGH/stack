@@ -51,14 +51,20 @@ RSpec.describe "Profiles API" do
       let!(:user_other) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: user_me.id) }
 
+      before { get '/api/v1/profiles', format: :json, access_token: access_token.token }
+
       it 'returns 200 status' do
-        get '/api/v1/profiles', format: :json, access_token: access_token.token
         expect(response).to be_success
       end
 
-      it 'contains emails another users' do
-        get '/api/v1/profiles', format: :json, access_token: access_token.token
-        expect(response.body).to be_json_eql([user_other.email].to_json).at_path("profiles")
+      it 'returns list of profiles' do
+        expect(response.body).to have_json_size(1).at_path('profiles')
+      end
+
+      %w(id email created_at updated_at admin).each do |attr|
+        it 'contains emails another users' do
+          expect(response.body).to be_json_eql(user_other.send(attr).to_json).at_path("profiles/0/#{attr}")
+        end
       end
     end
   end

@@ -6,14 +6,17 @@ class Api::V1::ProfilesController < Api::V1::BaseController
   end
 
   def index
-    user_email_list = []
-    curent_user_id = current_resource_owner.id
+    # user_email_list = []
+    # curent_user_id = current_resource_owner.id
 
-    User.all.each do |user|
-      next if user.id == curent_user_id
-      user_email_list << user.email
-    end
+    @users = User.where.not(id: current_resource_owner)
+    render json: @users
+    
+    # User.all.each do |user|
+    #   next if user.id == curent_user_id
+    #   user_email_list << user.email
+    # end
 
-    render json: user_email_list
+    # render json: user_email_list
   end
 end
