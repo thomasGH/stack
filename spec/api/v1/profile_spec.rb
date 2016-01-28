@@ -38,7 +38,7 @@ RSpec.describe "Profiles API" do
     end
   end
 
-  describe "GET #index" do
+  describe "GET /index" do
     context "unauthorized" do
       it 'returns 401' do
         get '/api/v1/profiles', format: :json
