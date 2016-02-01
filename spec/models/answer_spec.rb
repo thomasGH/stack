@@ -12,4 +12,8 @@ RSpec.describe Answer, type: :model do
   it { should validate_uniqueness_of (:body) }
 
   it { should accept_nested_attributes_for :attachments }
+
+  it_behaves_like "Votable" do
+    subject { create(:answer) }
+  end
 end
