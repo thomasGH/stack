@@ -34,6 +34,9 @@ gem 'omniauth-github'
 gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers'
+gem 'sidekiq'
+gem 'whenever'
+gem 'sinatra', require: false
 
 
 # Use ActiveModel has_secure_password
