@@ -1,27 +1,15 @@
 $(document).ready(function() {
 
-  var questionBlock = function(id, title, body) {
-    return '<h1 class="question_title">'
-      + title + '</h1><p class="question_body">'
-      + body + '</p><form style="display: none" class="edit_question" id="edit_question_'
-      + id + '" action="/questions/'
-      + id + '" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="text" value="'
-      + title + '" name="question[title]" id="question_title" /><textarea name="question[body]" id="question_body">'
-      + body + '</textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_question_link" href="#">Edit question</a></p>';
-  }
-
   $('form.edit_question').bind('ajax:success', function(e, question, status, xhr) {
-    $('div.question').replaceWith(questionBlock(question.id, question.title, question.body));
-    $('.question-errors').html('');
-  }).bind('ajax:error', function(e, xhr, status, error) {
-    errors = jQuery.parseJSON(xhr.responseText);
-    jQuery.each(errors, function(index, message) {
-      $('.question-errors').append('<p style="color: red">' + message + '</p>');
-    })
+    $('h1.question_title').replaceWith('<h1 class="question_title">' + question.question.title + '</h1>');
+    $('p.question_body').replaceWith('<p class="question_body">' + question.question.body + '</p>');
+    $('form.edit_question').hide();
+    $('a.edit_question_link').removeClass('cancel');
+    $('a.edit_question_link').html('Edit question');
+    $('.action-errors').html('');
   })
 
   $('a.edit_question_link').click(function() {
-
     var form = $('form.edit_question');
     var title = $('.question_title');
     var body = $('.question_body');
@@ -40,10 +28,14 @@ $(document).ready(function() {
   })
 
   PrivatePub.subscribe('/questions', function(data, channel) {
-    question = data['response'];
+    question = data['response'].question;
+    email = data['response'].email;
+
     $('.questions').append('<h2><a href="/questions/'
       + question.id + '">'
-      + question.title + '</a></h2><p>'
+      + question.title + '</a></h2><div class="author">'
+      + email + '</div><p>'
+      + '</div><p>'
       + question.body + '</p>');
   })
 })

@@ -10,8 +10,8 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: @answer
-      render json: @answer
+      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: { answer: @answer, email: current_user.email }
+      render json: { answer: @answer, email: @answer.user.email }
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity 
     end
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      render json: @answer
+      render json: { answer: @answer, email: @answer.user.email }
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity
     end

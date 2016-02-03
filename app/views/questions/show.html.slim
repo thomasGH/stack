@@ -1,7 +1,8 @@
+.action-errors
 .question data={ question_id: @question.id, best_answer_id: @question.best_answer_id }
   h1.question_title= @question.title
-  .author= @question.user.email
   p.question_body= @question.body
+  .author= @question.user.email
   - if can?(:manage, @question)
     = form_for @question, remote: true, html: { style: "display: none" } do |f|
       = f.text_field :title
@@ -15,11 +16,11 @@
         li
           = link_to a.file_name, a.file.url
           = link_to ' (Delete attachment)', a, method: :delete, data: { confirm: "Are you sure?" }
-.qustion-errors
+hr
+hr
 h2= 'Answers'
 .answers= render @question.answers
 - if can?(:create, Answer)
-  .answer-errors
   h2 New answer
   = form_for [@question, @answer], remote: true, format: :json do |f|
     = f.label :body, 'Your answer'

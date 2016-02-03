@@ -1,6 +1,6 @@
 = div_for answer do
   p.answer_body= answer.body
-  .author= answer.user.email
+  p.author= answer.user.email
   - if can?(:manage, answer)
     = form_for (answer), remote: true, html: { style: "display: none" } do |f|
       = f.text_area :body
