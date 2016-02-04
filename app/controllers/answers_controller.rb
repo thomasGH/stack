@@ -1,11 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_answer, only: [:show, :edit, :update, :destroy, :make_best]
-  before_action :set_question, only: [:create]
 
   authorize_resource
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
@@ -52,9 +52,5 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
-  end
-
-  def set_question
-    @question = Question.find(params[:question_id])
   end
 end
