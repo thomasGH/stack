@@ -1,0 +1,9 @@
+p
+  | Hello,
+  = @user.email
+p List of last day questions
+ul
+  - @questions.each do |question|
+    li
+      h2= question.title
+      = question.body
