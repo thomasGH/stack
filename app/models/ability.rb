@@ -26,6 +26,7 @@ class Ability
     can :manage, [Question, Answer], user_id: user.id
     can :me, User, id: user.id
     can :vote_up, [Question, Answer]
+    can :destroy, Attachment
     
     #can :create, [Question, Answer]
     #can :destroy, [Question, Answer], user_id: user.id
