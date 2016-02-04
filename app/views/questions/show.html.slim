@@ -23,7 +23,7 @@ h2= 'Answers'
 .answers= render @question.answers
 - if can?(:create, Answer)
   h2 New answer
-  = form_for [@question, @answer], remote: true, format: :json do |f|
+  = form_for [@question, @answer], remote: true, data: { type: :json } do |f|
     = f.label :body, 'Your answer'
     = f.text_area :body, id: 'new_answer_body'
     p Attachments:

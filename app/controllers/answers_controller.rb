@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
 
     if @answer.save
       PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: { answer: @answer, email: current_user.email }
-      render json: { answer: @answer, email: @answer.user.email }
+      render json: { answer: @answer, email: @answer.user.email, attachments: @answer.attachments }
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity 
     end

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  var answerBlock = function(id, body, email) {
+  var answerBlock = function(id, body, email, attachment) {
     return '<div class="answer" id="answer_'
       + id + '"><p class="answer_body" style="display: block">'
       + body + '</p><p class="author">'
@@ -10,11 +10,15 @@ $(document).ready(function() {
       + body + '</textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_answer_link" data-answer-id="'
       + id + '" href="#">Edit answer</a></p><p><a class="delete_answer_link" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/answers/'
       + id + '">Delete answer</a></p><p><a class="best_answer_link" data-remote="true" href="/answers/'
-      + id + '/best">Best answer</a></p><p>Attachments:</p><ul></ul><hr /></div>';
+      + id + '/best">Best answer</a></p><p>Attachments:</p><ul><li><a href="'
+      + attachment.file.url + '">'
+      + attachment.file.url + '</a><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/attachments/'
+      + attachment.id + '"> (Delete attachment)</a></li></ul><hr /></div>';
   }
 
   $('form.new_answer').bind('ajax:success', function(e, answer, status, xhr) {
-    $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email));
+    console.log(answer.attachments);
+    $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachments[0]));
     $('#new_answer_body').val('');
     $('.action-errors').html('');
   })
