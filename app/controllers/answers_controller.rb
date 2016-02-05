@@ -10,8 +10,8 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: { answer: @answer, email: current_user.email }
-      render json: { answer: @answer, email: @answer.user.email, attachments: @answer.attachments }
+      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", response: answer_with_attachment_json
+      render json: answer_with_attachment_json
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity 
     end
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      render json: { answer: @answer, email: @answer.user.email }
+      render json: answer_with_attachment_json
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity
     end
@@ -52,5 +52,15 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def answer_with_attachment_json
+    hash = { answer: @answer, email: @answer.user.email, attachment: [] }
+
+    unless @answer.attachments.empty?
+      hash[:attachment] = [@answer.attachments[0], @answer.attachments[0].file_name]
+    end
+
+    hash
   end
 end

@@ -9,11 +9,12 @@
     p= link_to 'Delete answer', answer, class: 'delete_answer_link', method: :delete, remote: true, data: { confirm: "Are you sure?" }
   - if can?(:manage, answer.question)
     p= link_to 'Best answer', make_best_path(answer), class: 'best_answer_link', remote: true
-  p Attachments:
-  ul
-    - answer.attachments.each do |a|
-      li
-        = link_to a.file_name, a.file.url
-        - if can?(:manage, answer)
-          = link_to ' (Delete attachment)', a, method: :delete, data: { confirm: "Are you sure?" }
+  .attachment
+    | Attachments:
+    ul
+      - answer.attachments.each do |a|
+        li
+          = link_to a.file_name, a.file.url
+          - if can?(:manage, answer)
+            = link_to ' (Delete attachment)', a, class: 'delete_answer_attachment_link', method: :delete, remote: true, data: { confirm: "Are you sure?" }
   hr

@@ -10,13 +10,14 @@
       = f.submit 'Update'
     p= link_to 'Edit question', '#', class: 'edit_question_link'
     p= link_to 'Delete question', @question, class: 'delete_question_link', method: :delete, data: { confirm: "Are you sure?" }
-  p Attachments:
-  ul
-    - @question.attachments.each do |a|
-      li
-        = link_to a.file_name, a.file.url
-        - if can?(:manage, @question)
-          = link_to ' (Delete attachment)', a, method: :delete, data: { confirm: "Are you sure?" }
+  .question_attachment
+    | Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li
+          = link_to a.file_name, a.file.url
+          - if can?(:manage, @question)
+            = link_to ' (Delete attachment)', a, class: 'delete_question_attachment_link', method: :delete, remote: true, data: { confirm: "Are you sure?" }
 hr
 hr
 h2= 'Answers'

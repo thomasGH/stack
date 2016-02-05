@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   var answerBlock = function(id, body, email, attachment) {
-    return '<div class="answer" id="answer_'
+    var block = '<div class="answer" id="answer_'
       + id + '"><p class="answer_body" style="display: block">'
       + body + '</p><p class="author">'
       + email + '</p><form style="display: none" class="edit_answer" id="edit_answer_'
@@ -10,15 +10,22 @@ $(document).ready(function() {
       + body + '</textarea><input type="submit" name="commit" value="Update" /></form><p><a class="edit_answer_link" data-answer-id="'
       + id + '" href="#">Edit answer</a></p><p><a class="delete_answer_link" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/answers/'
       + id + '">Delete answer</a></p><p><a class="best_answer_link" data-remote="true" href="/answers/'
-      + id + '/best">Best answer</a></p><p>Attachments:</p><ul><li><a href="'
-      + attachment.file.url + '">'
-      + attachment.file.url + '</a><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/attachments/'
-      + attachment.id + '"> (Delete attachment)</a></li></ul><hr /></div>';
+      + id + '/best">Best answer</a></p>';
+
+      if (attachment.length > 0) {
+        block += '<div class="attachment">Attachments:<ul><li><a href="'
+        + attachment[0].file.url + '">'
+        + attachment[1] + '</a><a class="delete_answer_attachment_link" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/attachments/'
+        + attachment[0].id + '"> (Delete attachment)</a></li></ul></div>';
+      }
+
+      block += '<hr /></div>'
+
+      return block;
   }
 
   $('form.new_answer').bind('ajax:success', function(e, answer, status, xhr) {
-    console.log(answer.attachments);
-    $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachments[0]));
+    $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachment));
     $('#new_answer_body').val('');
     $('.action-errors').html('');
   })
@@ -28,8 +35,13 @@ $(document).ready(function() {
     $('.action-errors').html('');
   })
 
+  $(document).on('ajax:success', 'a.delete_answer_attachment_link', function(e, answer, status, xhr) {
+    $('#answer_' + answer.answer.id).replaceWith(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachment));
+    $('.action-errors').html('');
+  })
+
   $(document).on('ajax:success', 'form.edit_answer', function(e, answer, status, xhr) {
-    $('#answer_' + answer.answer.id).replaceWith(answerBlock(answer.answer.id, answer.answer.body, answer.email));
+    $('#answer_' + answer.answer.id).replaceWith(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachment));
     $('.action-errors').html('');
   })
 
@@ -67,7 +79,7 @@ $(document).ready(function() {
   PrivatePub.subscribe(channel, function(data, channel) {
     answer = data['response'];
    if (answer.answer.user_id != $('body').data('userId')) {
-      $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email));
+      $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachment));
    }
   })
 })

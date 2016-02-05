@@ -5,7 +5,9 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @attachment = Attachment.find(params[:id])
+    @object = @attachment.attachable
     @attachment.destroy
-    render json: @attachment
+
+    render json: { answer: @object, email: @object.user.email, attachment: [] }
   end
 end

@@ -9,6 +9,11 @@ $(document).ready(function() {
     $('.action-errors').html('');
   })
 
+  $(document).on('ajax:success', 'a.delete_question_attachment_link', function(e, question, status, xhr) {
+    $('.question_attachment').remove();
+    $('.action-errors').html('');
+  })
+
   $('a.edit_question_link').click(function() {
     var form = $('form.edit_question');
     var title = $('.question_title');
