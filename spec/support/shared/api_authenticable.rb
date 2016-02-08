@@ -13,7 +13,9 @@ shared_examples_for "API Authenticable" do
 
   context "authorized" do
     it 'returns 200 status if access token is valid' do
-      do_request(method, api_path, access_token: access_token.token)
+      do_request(method, api_path, access_token: access_token.token,
+        question: { title: "Quest_via_api", body: "rest_api" },
+        answer: { body: "answer_rest_api" })
       expect(response).to be_success
     end
   end

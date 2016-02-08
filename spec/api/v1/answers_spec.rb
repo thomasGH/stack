@@ -74,4 +74,14 @@ RSpec.describe "Answers API" do
       end
     end
   end
+
+  describe "POST /create" do
+    let(:access_token) { create(:access_token)}
+
+    it_behaves_like "API Authenticable" do
+      let(:method) { :post }
+      let(:question) { create(:question) }
+      let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+    end
+  end
 end
