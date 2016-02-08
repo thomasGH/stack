@@ -1,4 +1,5 @@
 shared_examples_for "API Authenticable" do
+  let(:options) {{}}
   context "unauthorized" do
     it 'returns 401 status if request has not access token' do
       do_request(method, api_path)
@@ -13,9 +14,7 @@ shared_examples_for "API Authenticable" do
 
   context "authorized" do
     it 'returns 200 status if access token is valid' do
-      do_request(method, api_path, access_token: access_token.token,
-        question: { title: "Quest_via_api", body: "rest_api" },
-        answer: { body: "answer_rest_api" })
+      do_request(method, api_path, { access_token: access_token.token }.merge(options))
       expect(response).to be_success
     end
   end

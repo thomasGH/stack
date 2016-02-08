@@ -69,6 +69,12 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to questions_path
       end
+
+      it 'PrivatePub' do
+        expect(PrivatePub).to receive(:publish_to).with('/questions', kind_of(Hash))
+        post :create, question: attributes_for(:question)
+      end
+
     end
 
     context 'invalid' do

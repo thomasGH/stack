@@ -87,6 +87,7 @@ RSpec.describe "Questions API" do
     it_behaves_like "API Authenticable" do
       let(:method) { :post }
       let(:api_path) { '/api/v1/questions' }
+      let(:options) { { question: { title: "Quest_via_api", body: "rest_api" } } }
     end
   end
 end

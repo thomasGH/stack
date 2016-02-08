@@ -82,6 +82,7 @@ RSpec.describe "Answers API" do
       let(:method) { :post }
       let(:question) { create(:question) }
       let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+      let(:options) { { answer: { body: "answer_rest_api" } } }
     end
   end
 end
