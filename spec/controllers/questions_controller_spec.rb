@@ -65,16 +65,15 @@ RSpec.describe QuestionsController, type: :controller do
         }.to change(Question, :count).by(1)
       end
 
-      it 'redirect to show' do
+      it 'redirect to index' do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to questions_path
       end
 
-      it 'PrivatePub' do
+      it 'publishes to PrivatePub' do
         expect(PrivatePub).to receive(:publish_to).with('/questions', kind_of(Hash))
         post :create, question: attributes_for(:question)
       end
-
     end
 
     context 'invalid' do
@@ -103,7 +102,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq 'New Body'
       end
 
-      it 'render show template' do
+      it 'renders JSON' do
+        question.reload
+        expect(response.body).to be_json_eql(question.title.to_json).at_path("question/title")
+        expect(response.body).to be_json_eql(question.body.to_json).at_path("question/body")
       end
     end
 
@@ -115,7 +117,8 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to_not eq nil
       end
 
-      it 'renders edit template' do
+      it 'returns 422 status if error appears' do
+        expect(response.status).to eq 422
       end
     end
 
@@ -137,10 +140,12 @@ RSpec.describe QuestionsController, type: :controller do
       let!(:question) { create(:question, user: user) }
 
       it 'deletes question from DB' do
-        expect { delete :destroy, id: question, format: :json }.to change(Question, :count).by(-1)
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
       end
     end
 
@@ -148,7 +153,7 @@ RSpec.describe QuestionsController, type: :controller do
       before { question }
 
       it 'does not delete question from DB' do
-        expect { delete :destroy, id: question, format: :json }.to_not change(Question, :count)
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
     end
   end
