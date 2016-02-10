@@ -1,3 +1,9 @@
 h1 Search results
 - @results.each do |result|
-  p= link_to result.title, result
+  - if result.is_a?(Question)
+    p= link_to result.title, result
+  - elsif result.is_a?(Answer)
+    p= result.question.title
+    ul
+      li
+        = link_to result.body, result.question

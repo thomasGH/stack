@@ -4,7 +4,7 @@ RSpec.describe SearchController, type: :controller do
 
   describe "GET #search" do
     it "calls sphinx search" do
-      expect(ThinkingSphinx).to receive(:search).with('test')
+      expect(ThinkingSphinx).to receive(:search).with('test', classes: [Question, Answer])
       get :search, q: 'test'
     end
 

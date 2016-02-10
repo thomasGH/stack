@@ -1,6 +1,7 @@
 = form_tag search_path, method: :get do
   = label_tag :q, 'Search'
   = text_field_tag :q
+  = select nil, 'where', %w[All Questions Answers], {}
   = submit_tag 'Search'
 
 - if can?(:create, Question)
