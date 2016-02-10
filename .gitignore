@@ -16,4 +16,8 @@ config/private_pub.yml
 !/log/.keep
 /tmp
 
+dump.rdb
+config/*.sphinx.conf
+db/sphinx
+
 public/uploads/
