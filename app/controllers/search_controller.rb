@@ -2,13 +2,10 @@ class SearchController < ApplicationController
   def search
     query = Riddle::Query.escape(params[:q])
 
-    case params[:where]
-    when 'Questions'
-      @results = Question.search query
-    when 'Answers'
-      @results = Answer.search query
+    if params[:where] == 'Question' || params[:where] == 'Answer'
+      @results = ThinkingSphinx.search query, classes: [params[:where].constantize]
     else
-      @results = ThinkingSphinx.search query, classes: [Question, Answer]
+      @results = ThinkingSphinx.search query
     end
   end
 end
