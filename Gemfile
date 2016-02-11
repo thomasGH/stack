@@ -39,6 +39,7 @@ gem 'whenever'
 gem 'sinatra', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'redis-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

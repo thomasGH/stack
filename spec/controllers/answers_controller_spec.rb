@@ -116,14 +116,10 @@ RSpec.describe AnswersController, type: :controller do
 
   describe "#make_best" do
     let!(:answer) { create(:answer, question: question) }
+    before { login(user) }
 
-    before do
-      login(user)
-      question.best_answer = answer
-      question.save
-    end
-    
     it 'author of question can choose best answer' do
+      get :make_best, id: answer
       question.reload
       expect(question.best_answer_id).to eq answer.id
     end

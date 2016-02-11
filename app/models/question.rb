@@ -10,4 +10,11 @@ class Question < ActiveRecord::Base
   validates :title, uniqueness: true, length: { maximum: 200 }
 
   scope :last_day, -> { where("created_at >= now() - interval '1 day'") }
+
+  def make_best(answer)
+    self.class.transaction do
+      # some actions for one transaction...
+      update!(best_answer: answer) if self.answers.include?(answer)
+    end
+  end
 end

@@ -34,10 +34,7 @@ class AnswersController < ApplicationController
   end
 
   def make_best
-    question = @answer.question
-    question.best_answer_id = @answer.id
-
-    if question.save
+    if @answer.question.make_best(@answer)
       render json: @answer
     else
       render json: @answer.errors.full_messages, status: :unprocessable_entity

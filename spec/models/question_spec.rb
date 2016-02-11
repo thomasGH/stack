@@ -18,4 +18,14 @@ RSpec.describe Question, type: :model do
   it_behaves_like "Votable" do
     subject { create(:question) }
   end
+
+  describe '#make_best' do
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question: question) }
+
+    it 'set best answer_id to question' do
+      question.make_best(answer)
+      expect(question.best_answer).to eq answer
+    end
+  end
 end

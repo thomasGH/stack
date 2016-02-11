@@ -7,10 +7,12 @@
 - if can?(:create, Question)
   = link_to 'Ask question', new_question_path
 h1 All Questions
-.questions
-  - @questions.each do |question|
-    h2= link_to question.title, question
-    .author= question.user.email
-    p= question.body
+
+- cache collection_cache_key_for(:question) do
+  .questions
+    - @questions.each do |question|
+      h2= link_to question.title, question
+      .author= question.user.email
+      p= question.body
 
 = subscribe_to "/questions"
