@@ -1,0 +1,13 @@
+p
+  | Hello,&nbsp;
+  = @user.email
+
+p
+  | На вопрос&nbsp;
+  = link_to @question.title, @question
+  | &nbsp;дан новый ответ:
+p
+  = @answer.body
+p
+  | Все ответы на вопрос вы можете посмотреть&nbsp;
+  = link_to 'здесь', question_url(@question)

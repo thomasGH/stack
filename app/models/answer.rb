@@ -7,4 +7,14 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
   validates :body, uniqueness: true
+
+  after_create :send_notification
+
+  private
+
+  def send_notification
+    # [question.user].find_each do |user|
+      NotificationMailer.answer_notification(question.user, question, self).deliver_now
+    # end
+  end
 end
