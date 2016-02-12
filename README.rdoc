@@ -1,28 +1,21 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* IP address
 
-Things you may want to cover:
+95.213.199.56
 
-* Ruby version
+* OAuth
 
-* System dependencies
+<tt>/oauth/applications</tt>
 
-* Configuration
+* Query the access_tocen
 
-* Database creation
+<tt>client_id=&client_secret=&code=&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob</tt>
 
-* Database initialization
+* Sample API
 
-* How to run the test suite
+<tt>/api/v1/questions?access_token=</tt>
 
-* Services (job queues, cache servers, search engines, etc.)
+For POST:
 
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+<tt>{"title": "Quest_via_api", "body": "rest_api"}</tt>
