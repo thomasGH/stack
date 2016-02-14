@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
 
   authorize_resource
 
+  include Voted
+
   def index
     @questions = Question.all
   end

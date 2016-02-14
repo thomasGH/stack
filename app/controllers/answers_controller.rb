@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
 
   authorize_resource
 
+  include Voted
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)

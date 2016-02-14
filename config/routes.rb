@@ -7,17 +7,24 @@ Rails.application.routes.draw do
 
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+
+  root to: 'questions#index'
+
+  get 'search' => 'search#search'
   
+  get 'answers/:id/best', to: 'answers#make_best', as: 'make_best'
+
+  delete 'attachments/:id', to: 'attachments#destroy', as: 'attachment'
+
+  concern :votable do
+    post :vote_up, on: :member
+    post :vote_down, on: :member
+  end
+
   resources :questions do
     resources :answers, shallow: true
     resources :subscriptions, only: [:create, :destroy], shallow: true
   end
-
-  get 'answers/:id/best', to: 'answers#make_best', as: 'make_best'
-  get 'answers/:id/up', to: 'answers#add_vote', as: 'add_vote'
-  get 'answers/:id/down', to: 'answers#subtract_vote', as: 'subtract_vote'
-
-  delete 'attachments/:id', to: 'attachments#destroy', as: 'attachment'
 
   namespace :api do
     namespace :v1 do
@@ -31,10 +38,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  root to: 'questions#index'
-
-  get 'search' => 'search#search'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
