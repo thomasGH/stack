@@ -14,6 +14,18 @@ $(document).ready(function() {
     $('.action-errors').html('');
   })
 
+  $(document).on('ajax:success', 'p.subscribe', function(e, answer, status, xhr) {
+    if (answer.state == 'subscribed') {
+      alert('Вы подписались на этот вопрос');
+      $('p.subscribe').replaceWith('<p class="subscribe"><a data-remote="true" rel="nofollow" data-method="delete" href="/subscriptions/'
+        + answer.question.id + '">Unsubscribe</a></p>');
+    } else if (answer.state == 'unsubscribed') {
+      alert('Вы отписались от этого вопроса');
+      $('p.subscribe').replaceWith('<p class="subscribe"><a data-remote="true" rel="nofollow" data-method="post" href="/questions/'
+        + answer.question.id + '/subscriptions">Subscribe</a></p>');
+    }
+  })
+
   $('a.edit_question_link').click(function() {
     var form = $('form.edit_question');
     var title = $('.question_title');

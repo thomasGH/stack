@@ -5,9 +5,27 @@ RSpec.describe User do
   it { should have_many(:answers) }
   it { should have_many(:votes) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscribers_questions).dependent(:destroy) }
+  it { should have_many(:subscribed_questions).through(:subscribers_questions).source(:question) }
+
 
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
+
+  describe '#subscribe_to and #unsubscribe_from' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+
+    it 'subscribe user to question' do
+      user.subscribe_to(question)
+      expect(user.subscribed_questions.first).to eq question
+    end
+
+    it 'unsubscribe user from question' do
+      user.unsubscribe_from(question)
+      expect(user.subscribed_questions.size).to eq 0
+    end
+  end
 
   describe '#author_of?' do
     let!(:user) { create(:user) }

@@ -9,6 +9,16 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :votes
   has_many :authorizations, dependent: :destroy
+  has_many :subscribers_questions, dependent: :destroy
+  has_many :subscribed_questions, through: :subscribers_questions, source: :question
+
+  def subscribe_to(question)
+    subscribed_questions << question
+  end
+
+  def unsubscribe_from(question)
+    subscribed_questions.delete(question)
+  end
 
   def author_of?(object)
     id == object.user_id

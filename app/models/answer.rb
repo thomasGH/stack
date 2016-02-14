@@ -8,7 +8,7 @@ class Answer < ActiveRecord::Base
   validates :body, :question_id, :user_id, presence: true
   validates :body, uniqueness: true
 
-  after_create :send_notification
+  # after_create :send_notification
 
   private
 

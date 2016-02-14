@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   
   resources :questions do
     resources :answers, shallow: true
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 
   get 'answers/:id/best', to: 'answers#make_best', as: 'make_best'
