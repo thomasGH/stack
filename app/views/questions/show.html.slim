@@ -11,10 +11,11 @@
       = f.submit 'Update'
     p= link_to 'Edit question', '#', class: 'edit_question_link'
     p= link_to 'Delete question', @question, class: 'delete_question_link', method: :delete, data: { confirm: "Are you sure?" }
-  - if current_user.subscribers_questions.where(question: @question).present?
-    p.subscribe= link_to 'Unsubscribe', subscription_path, method: :delete, remote: true
-  - else
-    p.subscribe= link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true
+  - if can?(:manage, SubscribersQuestion)
+    - if current_user.subscribers_questions.where(question: @question).present?
+      p.subscribe= link_to 'Unsubscribe', subscription_path, method: :delete, remote: true
+    - else
+      p.subscribe= link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true
   .question_attachment
     | Attachments:
     ul

@@ -17,23 +17,4 @@ RSpec.describe Answer, type: :model do
   it_behaves_like "Votable" do
     subject { create(:answer) }
   end
-
-  # describe 'sends notifications to' do
-  #   let(:users) { create_list(:user, 3) }
-  #   let(:question) { create(:question) }
-  #   let(:answer) { create(:answer) }
-
-  #   it 'suscribers' do 
-  #     users.each do |user|
-  #       expect(NotificationMailer).to receive(:answer_notification).with(user, question, answer).and_call_original
-  #       NotificationMailer.deliver_now
-  #     end
-  #   end
-
-  #   it 'owner of question' do
-  #     expect(NotificationMailer).to receive(:answer_notification).with(question.user, question, answer).and_call_original
-  #     ActionMailer::Base.perform_now
-  #     NotificationMailer.deliver_now
-  #   end
-  # end
 end
