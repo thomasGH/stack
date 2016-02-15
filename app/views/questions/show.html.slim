@@ -3,7 +3,15 @@
   - cache @question do
     h1.question_title= @question.title
     p.question_body= @question.body
-    .author= @question.user.email
+  .sum
+    = @question.votes_sum
+    | &nbsp;votes&nbsp;
+  - if can?(:vote_up, @question)
+    p.voting
+      = link_to 'Up', vote_up_question_path(@question), method: :post, remote: true
+      | &nbsp;
+      = link_to 'Down', vote_down_question_path(@question), method: :post, remote: true
+  .author= @question.user.email
   - if can?(:manage, @question)
     = form_for @question, remote: true, html: { style: "display: none" } do |f|
       = f.text_field :title

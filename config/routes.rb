@@ -21,8 +21,8 @@ Rails.application.routes.draw do
     post :vote_down, on: :member
   end
 
-  resources :questions do
-    resources :answers, shallow: true
+  resources :questions, concerns: :votable do
+    resources :answers, concerns: :votable, shallow: true
     resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 

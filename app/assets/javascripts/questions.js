@@ -26,6 +26,10 @@ $(document).ready(function() {
     }
   })
 
+  $(document).on('ajax:success', 'p.voting', function(e, answer, status, xhr) {
+    $('.sum').replaceWith('<div class="sum">' + answer.votes + '&nbsp;votes</div>');
+  })
+
   $('a.edit_question_link').click(function() {
     var form = $('form.edit_question');
     var title = $('.question_title');

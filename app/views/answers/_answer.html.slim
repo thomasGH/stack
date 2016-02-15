@@ -1,5 +1,11 @@
 = div_for answer do
   p.answer_body= answer.body
+  = answer.votes_sum
+  | &nbsp;votes
+  - if can?(:vote_up, answer)
+      = link_to 'Up', vote_up_answer_path(answer), method: :post, remote: true
+      | &nbsp;
+      = link_to 'Down', vote_down_answer_path(answer), method: :post, remote: true
   p.author= answer.user.email
   - if can?(:manage, answer)
     = form_for (answer), remote: true, html: { style: "display: none" } do |f|

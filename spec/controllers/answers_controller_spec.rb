@@ -124,4 +124,26 @@ RSpec.describe AnswersController, type: :controller do
       expect(question.best_answer_id).to eq answer.id
     end
   end
+
+  describe "POST /vote_up" do
+    before { login(user) }
+
+    it 'calls Answer#vote_up method' do
+      answer = create(:answer)
+      allow(Answer).to receive(:find).and_return(answer)
+      expect(answer).to receive(:vote_up).with(user)
+      post :vote_up, id: answer
+    end
+  end
+
+  describe "POST /vote_down" do
+    before { login(user) }
+
+    it 'calls Answer#vote_down method' do
+      answer = create(:answer)
+      allow(Answer).to receive(:find).and_return(answer)
+      expect(answer).to receive(:vote_down).with(user)
+      post :vote_down, id: answer
+    end
+  end
 end

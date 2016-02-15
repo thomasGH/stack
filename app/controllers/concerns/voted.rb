@@ -7,12 +7,12 @@ module Voted
 
   def vote_up
     @votable.vote_up(current_user)
-    render nothing: true
+    render json: { votes: @votable.votes_sum }
   end
 
   def vote_down
     @votable.vote_down(current_user)
-    render nothing: true
+    render json: { votes: @votable.votes_sum }
   end
 
   private
