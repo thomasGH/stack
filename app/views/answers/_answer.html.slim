@@ -1,8 +1,10 @@
 = div_for answer do
   p.answer_body= answer.body
-  = answer.votes_sum
-  | &nbsp;votes
+  .a_sum id=answer.id
+    = answer.votes_sum
+    | &nbsp;votes&nbsp;
   - if can?(:vote_up, answer)
+    p.a_voting
       = link_to 'Up', vote_up_answer_path(answer), method: :post, remote: true
       | &nbsp;
       = link_to 'Down', vote_down_answer_path(answer), method: :post, remote: true

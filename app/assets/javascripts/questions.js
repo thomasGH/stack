@@ -26,8 +26,8 @@ $(document).ready(function() {
     }
   })
 
-  $(document).on('ajax:success', 'p.voting', function(e, answer, status, xhr) {
-    $('.sum').replaceWith('<div class="sum">' + answer.votes + '&nbsp;votes</div>');
+  $(document).on('ajax:success', 'p.q_voting', function(e, answer, status, xhr) {
+    $('.q_sum').replaceWith('<div class="q_sum">' + answer.votes + '&nbsp;votes</div>');
   })
 
   $('a.edit_question_link').click(function() {

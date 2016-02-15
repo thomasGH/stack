@@ -24,6 +24,11 @@ $(document).ready(function() {
       return block;
   }
 
+  $(document).on('ajax:success', 'p.a_voting', function(e, answer, status, xhr) {
+    $('#' + answer.object_id).replaceWith('<div id="' + answer.object_id + '" class="a_sum">'
+      + answer.votes + '&nbsp;votes</div>');
+  })
+
   $('form.new_answer').bind('ajax:success', function(e, answer, status, xhr) {
     $('.answers').append(answerBlock(answer.answer.id, answer.answer.body, answer.email, answer.attachment));
     $('#new_answer_body').val('');
