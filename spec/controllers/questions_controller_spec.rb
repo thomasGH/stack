@@ -158,25 +158,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "POST /vote_up" do
-    before { login(user) }
-
-    it 'calls Question#vote_up method' do
-      question = create(:question)
-      allow(Question).to receive(:find).and_return(question)
-      expect(question).to receive(:vote_up).with(user)
-      post :vote_up, id: question
-    end
-  end
-
-  describe "POST /vote_down" do
-    before { login(user) }
-
-    it 'calls Question#vote_down method' do
-      question = create(:question)
-      allow(Question).to receive(:find).and_return(question)
-      expect(question).to receive(:vote_down).with(user)
-      post :vote_down, id: question
-    end
+  it_behaves_like "Controller Votable" do
+    subject { create(:question) }
   end
 end

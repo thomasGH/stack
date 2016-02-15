@@ -1,4 +1,4 @@
-shared_examples_for "Votable" do
+shared_examples_for "Model Votable" do
   it { have_many(:votes).dependent(:destroy) }
 
   let(:user) { create(:user) }
