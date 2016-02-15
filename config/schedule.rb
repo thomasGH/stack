@@ -22,3 +22,7 @@
 every 1.day do
   runner "DailyDigestJob.perform_later"
 end
+
+every 1.hour do
+  rake 'ts:index'
+end
