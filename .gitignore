@@ -6,7 +6,7 @@
 
 config/database.yml
 config/private_pub.yml
-/private_pub.ru
+private_pub.ru
 
 # Ignore bundler config.
 /.bundle
