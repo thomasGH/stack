@@ -11,6 +11,14 @@ RSpec.describe Ability, type: :model do
 
     it { should_not be_able_to :manage, Question }
     it { should_not be_able_to :manage, Answer } 
+
+    it { should_not be_able_to :destroy, Attachment }
+    it { should_not be_able_to :manage, SubscribersQuestion }
+    it { should_not be_able_to :make_best, Answer }
+    it { should_not be_able_to :vote_up, Question }
+    it { should_not be_able_to :vote_up, Answer }
+    it { should_not be_able_to :vote_down, Question }
+    it { should_not be_able_to :vote_down, Answer }
   end
 
   describe 'for admin' do
@@ -41,5 +49,13 @@ RSpec.describe Ability, type: :model do
 
     it { should_not be_able_to :destroy, create(:question, user: other) }
     it { should_not be_able_to :destroy, create(:answer, question: question, user: other) }
+
+    it { should be_able_to :make_best, create(:answer, question: question, user: user) }
+    it { should_not be_able_to :make_best, create(:answer, question: question, user: other) }
+
+    it { should be_able_to :vote_up, create(:question, user: other) }
+    it { should be_able_to :vote_down, create(:question, user: other) }
+    it { should be_able_to :vote_up, create(:answer, user: other) }
+    it { should be_able_to :vote_down, create(:answer, user: other) }
   end
 end

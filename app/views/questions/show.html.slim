@@ -6,10 +6,11 @@
   .q_sum
     = @question.votes_sum
     | &nbsp;votes&nbsp;
-  - if can?(:vote_up, @question)
-    p.q_voting
+  p.q_voting
+    - if can?(:vote_up, @question)
       = link_to 'Up', vote_up_question_path(@question), method: :post, remote: true
       | &nbsp;
+    - if can?(:vote_down, @question)
       = link_to 'Down', vote_down_question_path(@question), method: :post, remote: true
   .author= @question.user.email
   - if can?(:manage, @question)

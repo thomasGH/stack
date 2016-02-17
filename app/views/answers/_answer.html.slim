@@ -3,10 +3,11 @@
   .a_sum id=answer.id
     = answer.votes_sum
     | &nbsp;votes&nbsp;
-  - if can?(:vote_up, answer)
-    p.a_voting
+  p.a_voting
+    - if can?(:vote_up, answer)
       = link_to 'Up', vote_up_answer_path(answer), method: :post, remote: true
       | &nbsp;
+    - if can?(:vote_down, answer)
       = link_to 'Down', vote_down_answer_path(answer), method: :post, remote: true
   p.author= answer.user.email
   - if can?(:manage, answer)
@@ -15,7 +16,7 @@
       = f.submit 'Update'
     p= link_to 'Edit answer', '#', class: 'edit_answer_link', data: { answer_id: answer.id }
     p= link_to 'Delete answer', answer, class: 'delete_answer_link', method: :delete, remote: true, data: { confirm: "Are you sure?" }
-  - if can?(:manage, answer.question)
+  - if can?(:make_best, answer)
     p= link_to 'Best answer', make_best_path(answer), class: 'best_answer_link', remote: true
   .attachment
     | Attachments:
