@@ -115,7 +115,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "#make_best" do
-    let!(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, user: user) }
     before { login(user) }
 
     it 'author of question can choose best answer' do
